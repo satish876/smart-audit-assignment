@@ -20,6 +20,7 @@
 
 ### /video
 1. **POST /video** - To add a new video
+    
     request body
    1. `title`, required
    2. `thumbnailUrl`, required
@@ -28,8 +29,10 @@
 2.**GET /video/:id** - To fetch a video by id
 3. DELETE /video:id - To delete a video by id
 
+
 ### /playlist
 1. **POST /playlist** - To add a new playlist
+
     request body
    1. `name`, required
    2. `url`, required
