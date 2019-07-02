@@ -34,10 +34,13 @@ playlistSchema.methods.shufflePlaylist = async function () {
 
     //this contains the shuffeled videos
     const shuffledVideos = shuffledIndexArr.map(index => this.videos[index])
-    // to save to DB
+    
+    //saving the shuffled result to DB,
+    //next time we fetch all the videos using /GET, we will get shuffled result
+    
     // this.videos = shuffledVideos;
     // await this.videos.save()
-    return shuffledVideos
+    // return shuffledVideos
 }
 
 const Playlist = mongoose.model("Playlist", playlistSchema)
