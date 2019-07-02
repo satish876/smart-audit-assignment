@@ -1,46 +1,53 @@
 const express = require("express")
-const VideoModel = require("../models/video.model")
+const PlaylistModel = require("../models/playlist.model")
 
 const router = express.Router()
 
-//endpoint to add new video
+//endpoint to add new playlist
 router.post("/", async (req, res) => {
-
     try {
-        const { title, thumbnailUrl, videoUrl, duration } = req.body
-        const video = VideoModel({ title, thumbnailUrl, videoUrl, duration })
+        const {name, url, videos } = req.body
+        const playlist = PlaylistModel({
+            name, url, videos
+        })
 
-        await video.save()
-        res.send(video)
+        await playlist.save()
+        res.send(playlist)
     } catch (error) {
         console.log(error);
         res.status(400).send(error)
     }
 })
 
-//endpoint to fetch video by id
+//endpoint to fetch playlist videos by playlist id
 router.get("/:id", async (req, res) => {
     try {
-        const video = await VideoModel.findById(req.params.id)
-        delete video._id
-        res.send(video)
+        await PlaylistModel.
+            findById(req.params.id).
+            populate('videos').
+            exec(function (err, playlist) {
+                if (err) return handleError(err);
+                res.send(playlist.videos)
+            });
     } catch (error) {
         res.status(404).send({
-            message: "video not found"
+            message: "playlist not found"
         })
     }
 })
 
-//endpoint to delete video by id
+//endpoint to delete playlist by id
 router.delete("/:id", async (req, res) => {
     try {
         if (!req.params.id) throw new Error()
 
-        const video = await VideoModel.findByIdAndDelete(req.params.id)
-        res.send(video)
+        const playlist = await PlaylistModel.findByIdAndDelete(req.params.id)
+
+        if(!playlist) throw new Error()
+        res.send(playlist)
     } catch (error) {
         res.status(500).send({
-            message: "Unable to delete"
+            message: "Unable to delete playlist"
         })
     }
 })

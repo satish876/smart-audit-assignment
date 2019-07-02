@@ -7,6 +7,7 @@ var logger = require('morgan');
 require("./db/mongoose")
 
 var playlistRoute = require('./routes/playlist.route.js');
+var videoRoute = require('./routes/video.route.js');
 
 var app = express();
 
@@ -16,7 +17,8 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
-app.use('/video', playlistRoute);
+app.use('/video', videoRoute);
+app.use('/playlist', playlistRoute);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
