@@ -5,7 +5,8 @@ const Schema = mongoose.Schema
 const playlistSchema = new Schema({
     name: {
         type: String,
-        required: true
+        required: true,
+        minlength: 3
     },
     url: {
         required: true,
@@ -37,7 +38,7 @@ playlistSchema.methods.shufflePlaylist = async function () {
     
     //saving the shuffled result to DB,
     //next time we fetch all the videos using /GET, we will get shuffled result
-    
+
     // this.videos = shuffledVideos;
     // await this.videos.save()
     // return shuffledVideos

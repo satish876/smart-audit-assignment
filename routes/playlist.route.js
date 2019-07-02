@@ -1,4 +1,5 @@
 const express = require("express")
+const validator = require("validator")
 const PlaylistModel = require("../models/playlist.model")
 
 const router = express.Router()
@@ -7,6 +8,13 @@ const router = express.Router()
 router.post("/", async (req, res) => {
     try {
         const {name, url, videos } = req.body
+
+        if (!validator.isURL(url)) {
+            return res.status(400).send({
+                message: "invalid video url"
+            })
+        }
+
         const playlist = PlaylistModel({
             name, url, videos
         })
@@ -15,7 +23,7 @@ router.post("/", async (req, res) => {
         res.send(playlist)
     } catch (error) {
         console.log(error);
-        res.status(400).send(error)
+        res.status(500).send(error)
     }
 })
 
@@ -26,8 +34,12 @@ router.get("/:id", async (req, res) => {
             findById(req.params.id).
             populate('videos').
             exec(function (err, playlist) {
-                if (err) return handleError(err);
-                res.send(playlist.videos)
+                console.log(playlist);
+                if (err) return res.status(500).send();
+                res.send({
+                    videos: playlist.videos,
+                    count: playlist.videos.length
+                })
             });
     } catch (error) {
         res.status(404).send({

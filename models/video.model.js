@@ -5,7 +5,8 @@ const Schema = mongoose.Schema
 const videoSchema = new Schema({
     title: {
         type: String,
-        required: true
+        required: true,
+        minlength: 3
     },
     thumbnailUrl: {
         required: true,
@@ -17,7 +18,8 @@ const videoSchema = new Schema({
     },
     duration: {
         type: Number,
-        required: true
+        required: true,
+        min:0
     }
 })
 

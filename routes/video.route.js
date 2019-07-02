@@ -1,4 +1,5 @@
 const express = require("express")
+const validator = require("validator")
 const VideoModel = require("../models/video.model")
 
 const router = express.Router()
@@ -8,13 +9,25 @@ router.post("/", async (req, res) => {
 
     try {
         const { title, thumbnailUrl, videoUrl, duration } = req.body
+        if (!validator.isURL(thumbnailUrl)) {
+            return res.status(400).send({
+                message: "invalid thumbnail url"
+            })
+        }
+
+        if (!validator.isURL(videoUrl)) {
+            return res.status(400).send({
+                message: "invalid video url"
+            })
+        }
+
         const video = VideoModel({ title, thumbnailUrl, videoUrl, duration })
 
         await video.save()
         res.send(video)
     } catch (error) {
         console.log(error);
-        res.status(400).send(error)
+        res.status(500).send(error)
     }
 })
 
