@@ -52,4 +52,16 @@ router.delete("/:id", async (req, res) => {
     }
 })
 
+//just to test if shuffling worked or not
+
+// router.get("/:id/shuffle", async (req, res) => {
+//     try {
+//         const playlist = await PlaylistModel.findById(req.params.id)
+//         const result = await playlist.shufflePlaylist()
+//         res.send(result)
+//     } catch (error) {
+//         res.status(500).send(error)
+//     }
+// })
+
 module.exports = router
