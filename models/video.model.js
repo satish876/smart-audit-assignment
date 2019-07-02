@@ -8,7 +8,7 @@ const videoSchema = new Schema({
         required: true
     },
     thumbnailUrl: {
-        required: required,
+        required: true,
         type: String
     },
     videoUrl: {
@@ -17,7 +17,7 @@ const videoSchema = new Schema({
     },
     duration: {
         type: Number,
-        require: true
+        required: true
     }
 })
 
