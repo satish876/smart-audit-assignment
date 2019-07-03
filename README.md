@@ -16,6 +16,10 @@
 ## Running the application
 1. `npm start`
 
+By default server starts at port 3000, we can set the port by passing env variable
+
+for eg, `PORT=5000 npm start`
+
 ## Endpoints
 
 ### /video
@@ -26,7 +30,7 @@
    2. `thumbnailUrl`, required
    3. `videoUrl`, required
    4. `duration`, required
-2.**GET /video/:id** - To fetch a video by id
+2. **GET /video/:id** - To fetch a video by id
 3. DELETE /video:id - To delete a video by id
 
 
