@@ -9,12 +9,6 @@ router.post("/", async (req, res) => {
     try {
         const {name, url, videos } = req.body
 
-        if (!validator.isURL(url)) {
-            return res.status(400).send({
-                message: "invalid video url"
-            })
-        }
-
         const playlist = PlaylistModel({
             name, url, videos
         })

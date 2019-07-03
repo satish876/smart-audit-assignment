@@ -9,18 +9,7 @@ router.post("/", async (req, res) => {
 
     try {
         const { title, thumbnailUrl, videoUrl, duration } = req.body
-        if (!validator.isURL(thumbnailUrl)) {
-            return res.status(400).send({
-                message: "invalid thumbnail url"
-            })
-        }
-
-        if (!validator.isURL(videoUrl)) {
-            return res.status(400).send({
-                message: "invalid video url"
-            })
-        }
-
+        
         const video = VideoModel({ title, thumbnailUrl, videoUrl, duration })
 
         await video.save()

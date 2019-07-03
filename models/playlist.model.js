@@ -1,4 +1,6 @@
 const mongoose = require("mongoose")
+const validator = require("validator")
+const VideoModel = require("./video.model")
 
 const Schema = mongoose.Schema
 
@@ -6,15 +8,30 @@ const playlistSchema = new Schema({
     name: {
         type: String,
         required: true,
-        minlength: 3
+        minlength: 3,
+        trim: true,
+        unique: true
     },
     url: {
         required: true,
-        type: String
+        type: String,
+        trim: true,
+        unique: true,
+        validate: {
+            validator(url) {
+                if (!validator.isURL(url)) throw new Error("invalid playlist url")
+            }
+        }
     },
     videos: [{
         type: Schema.Types.ObjectId,
-        ref: "Video"
+        ref: "Video",
+        validate: {
+            async validator(videoId) {
+                const video = await VideoModel.findById(videoId.toString())
+                if (!video) throw new Error(`video with id ${videoId.toString()} doesn't exist`)
+            }
+        }
     }]
 })
 
